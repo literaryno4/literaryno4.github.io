@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Git Tutorial"
-date:   2019-10-08 21:37:01 +0800
 categories: jekyll update
 ---
 In `Linux` comand line env, to use git you need to initial a folder:
@@ -40,10 +39,4 @@ after that, every time you want to pull, just type:
 `~$ git pull`
 
 ---
-| 苏格拉底 | 古希腊 |
-|----------|--------|
-
-
-$ \sum_{i=0}^{n}i^2 $
-
-\alpha
+For more info, refer to this [video](https://www.youtube.com/watch?v=SWYqp7iY_Tc)

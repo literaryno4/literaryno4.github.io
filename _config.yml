@@ -37,7 +37,7 @@ plugins:
   - jekyll-feed
 
 # Global permalink
-permalink: /:year/:month/:day/:title:output_ext
+permalink: /:title:output_ext/
 
 markdown: kramdown
 # Exclude from processing.
