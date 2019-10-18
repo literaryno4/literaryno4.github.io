@@ -3,7 +3,7 @@ layout: post
 title:  "Git Tutorial"
 categories: jekyll update
 ---
-In `Linux` comand line env, to use git you need to initial a folder:
+In `Linux` comand line env, to use [git](https://en.wikipedia.org/wiki/Git) you need to initial a folder:
 
 `~$ git init FOLDER-NAME`
 
@@ -39,4 +39,8 @@ after that, every time you want to pull, just type:
 `~$ git pull`
 
 ---
-For more info, refer to this [video](https://www.youtube.com/watch?v=SWYqp7iY_Tc)
+For more info, refer to:
+- [video](https://www.youtube.com/watch?v=SWYqp7iY_Tc)
+- [Git Cheat Sheet](https://gitee.com/liaoxuefeng/learn-java/raw/master/teach/git-cheatsheet.pdf)
+- [Git Official Site](https://git-scm.com/)
+- [史上最浅显易懂的Git教程！](https://www.liaoxuefeng.com/wiki/896043488029600)
