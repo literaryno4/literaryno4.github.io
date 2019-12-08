@@ -6,6 +6,8 @@ categories: jekyll update
 
 ## 管理学体系框架
 
+![structure-of-management-science](/assets/structure-of-management-science.png)
+
 ## 一些概念
 
 - 定义：管理是指组织中的管理者，对组织中的人力、资金、物资等资源，通过实施计划、组织、领导、控制等一系列过程，以有效达成组织的目标。
