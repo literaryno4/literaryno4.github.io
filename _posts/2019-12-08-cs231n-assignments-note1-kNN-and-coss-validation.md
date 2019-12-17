@@ -190,7 +190,7 @@ for k_chosen in k_choices:
 
 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 ```
-when debuging, I find that removing numpy array elements from list does not work if using `a.remove`. From [this page](https://stackoverflow.com/questions/3157374/how-do-you-remove-a-numpy-array-from-a-list-of-numpy-arrays), I figure out using `a.pop(i)`instead.
+when debuging, I find that removing numpy array elements from list does not work if using `a.remove()`. From [this page](https://stackoverflow.com/questions/3157374/how-do-you-remove-a-numpy-array-from-a-list-of-numpy-arrays), I figure out using `a.pop(i)`instead.
 
 <a name='rf'></a>
 
