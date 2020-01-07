@@ -12,6 +12,19 @@ categories: jekyll update
 
 ## A Try to Interpret How Neural Network Works 
 
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn1/neuron.png" width="49%">
+  <img src="/assets/nn1/neuron_model.jpeg" width="49%" style="border-left: 1px solid black;">
+</div>
+> A cartoon drawing of a biological neuron (left) and its mathematical model (right).
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn1/neural_net.jpeg" width="40%">
+  <img src="/assets/nn1/neural_net2.jpeg" width="55%" style="border-left: 1px solid black;">
+</div>
+
+> <b>Left:</b> A 2-layer Neural Network (one hidden layer of 4 neurons (or units) and one output layer with 2 neurons), and three inputs. <b>Right:</b> A 3-layer neural network with three inputs, two hidden layers of 4 neurons each and one output layer. Notice that in both cases there are connections (synapses) between neurons across layers, but not within a layer.
+
 Take a two layer neural network as an example. You do following steps to train a neural network model:
 
 1. Initialize the weights. Between input layer and hidden layer, there is matrix $ W1 $ for input weights. Between hidden layer and output layer, there is matrix $ W2 $ for hidden layer weights. We first initialize them.
