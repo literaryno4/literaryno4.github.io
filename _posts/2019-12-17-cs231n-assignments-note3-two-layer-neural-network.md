@@ -27,9 +27,9 @@ categories: jekyll update
 
 Take a two layer neural network as an example. You do following steps to train a neural network model:
 
-1. Initialize the weights. Between input layer and hidden layer, there is matrix $ W1 $ for input weights. Between hidden layer and output layer, there is matrix $ W2 $ for hidden layer weights. We first initialize them.
+1. **Initialize the weights**. Between input layer and hidden layer, there is matrix $ W1 $ for input weights. Between hidden layer and output layer, there is matrix $ W2 $ for hidden layer weights. We first initialize them.
 
-2. Forwardpropagation(forward pass). We do forward pass to compute the loss. Say, for the first layer, we use ReLU as **activation function** and softmax for the second layer. So we have the following expressions. Then, we get the loss.
+2. **Forwardpropagation(forward pass)**. We do forward pass to compute the loss. Say, for the first layer, we use ReLU as **activation function** and softmax for the second layer. So we have the following expressions. Then, we get the loss.
 
 	$$ 
 
@@ -54,9 +54,9 @@ Take a two layer neural network as an example. You do following steps to train a
 	$$
 
 
-3. Backpropagation. We calculate the gradient for decreasing the loss. According the expression above, we compute the corresponding gradients of every layer for every $ W $ and $ b $(bias). The math behind can be referred to [this blog](https://blog.csdn.net/yc461515457/article/details/51944683). 
+3. **Backpropagation**. We calculate the gradient for decreasing the loss. According the expression above, we compute the corresponding gradients of every layer for every $ W $ and $ b $(bias). The math behind can be referred to [this blog](https://blog.csdn.net/yc461515457/article/details/51944683). 
 
-4. Train the network using **SGD**. It means that we use the computed gradients to tweak our parameters($ W $ and $ b $), making the loss converge into a minimal. The final trained parameters are the key part of our model. Check the code below to see how it is implemented.
+4. **Train the network using SGD**. It means that we use the computed gradients to tweak our parameters($ W $ and $ b $), making the loss converge into a minimal. The final trained parameters are the key part of our model. Check the code below to see how it is implemented.
 
 Here is an implement of the loss and the gradients:
 
