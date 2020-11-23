@@ -27,3 +27,46 @@ categories: jekyll update
   ```shell
   rename 's/.A/.B/'
   ```
+  
+- 获取当前文件夹下文件数目：
+  - 获取文件数目:
+    ```shell
+    ls -l | grep "^-" | wc -l
+    ```
+  - 获取文件数目(包括文件夹）：
+    ```shell
+    ls -lR | grep "^-" | wc -l
+    ```
+  - 获取文件夹数目：
+    ```shell
+    ls -lR | grep "^d" | wc -l
+    ```
+ 
+- 用户管理: `useradd`, `groupadd`, `su`;
+  - 创建用户:`useradd`:
+    ```shell
+    useradd -m USERNAME
+    ```
+    or
+    ```shell
+    adduser USERNAME
+    ```
+  - 删除用户:
+    ```shell
+    useradd -r USERNAME
+    ```
+  - 切换用户: `su`;
+    ```shell
+    sudo su
+    su USERNAME
+    ```
+    
+- 列出非指定文件：
+  - 单个文件:
+    ```shell
+    ls -I FILENAME`:
+    ```
+  - 忽略扩展名`*.png`:
+    ```shell
+    ls -I "*.png"
+    ```
