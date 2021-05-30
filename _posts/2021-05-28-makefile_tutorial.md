@@ -4,6 +4,16 @@ title:  "GNU make/Makefile 简明教程"
 categories: jekyll update
 ---
 
+目录：
+
+- [1. 简介](#1-简介)
+- [2. 示例项目](#2-示例项目)
+- [3. 为什么使用`make`](#3-为什么使用make)
+- [4. 使用变量](#4-使用变量)
+- [5. 模式规则](#5-模式规则)
+- [6. 使用函数](#6-使用函数)
+- [7. 总结](#7-总结)
+
 ### 1. 简介
 
 `make`(GNU make) 是一个项目构建工具，即方便地编译、链接多个源代码文件，自动决定哪些源文件需要重新编译，从而高效地构建自己地项目。本教程使用最广泛使用`make`的`.c`文件为例，但实际上`make`的使用并不限于 C 语言。
@@ -55,7 +65,7 @@ categories: jekyll update
 
 1. 生成库文件和源文件的目标文件:
 
-```make
+```shell
 gcc -c -o obj/error_functions.o ../lib/error_functions.c 
 gcc -c -o obj/get_num.o ../lib/get_num.c 
 gcc -c -o obj/inet_sockets.o ../lib/inet_sockets.c 
@@ -66,7 +76,7 @@ gcc -c -o obj/server.o server.c
 
 2. 链接目标文件生成可执行文件：
 
-```make
+```shell
 gcc -o client obj/client.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.o 
 gcc -o server obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.o
 ```
@@ -75,7 +85,7 @@ gcc -o server obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_socke
 
 `make`执行`Makefile`指定的规则，`Makefile`一个规则的基本构成如下：
 
-```make
+```
 target … : prerequisites …
     recipe
     …
@@ -112,6 +122,7 @@ client: obj/client.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  
 server: obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.o 
 	gcc -o server obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.
 
+.PHONY: clean
 clean：
     rm obj/*.o client server
 ```
@@ -139,6 +150,7 @@ gcc -o server obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_socke
 ```shell
 make clean
 ```
+`.PHONY`表示`clean`不是一个文件而是一个命令的名字。
 
 更方便的，也可以在`Makefile`内建的`all`规则中指定要执行的规则：
 ```make
@@ -170,6 +182,7 @@ client: obj/client.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  
 server: obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.o 
 	gcc -o server obj/server.o  obj/error_functions.o  obj/get_num.o  obj/inet_sockets.o  obj/become_daemon.o
 
+.PHONY: clean
 clean：
     rm obj/*.o client server
 ```
@@ -226,6 +239,7 @@ client: $(ODIR)/client.o $(DEPS)
 server: $(ODIR)/server.o $(DEPS) 
 	$(CC) -o $@ $^
 
+.PHONY: clean
 clean: 
 	rm $(ODIR)/*.o $(PROGRAM)
 ```
@@ -310,6 +324,7 @@ client: $(ODIR)/client.o $(DEPS)
 server: $(ODIR)/server.o $(DEPS) 
 	$(CC) -o $@ $^
 
+.PHONY: clean
 clean: 
 	rm $(ODIR)/*.o $(PROGRAM)
 ```
@@ -329,11 +344,11 @@ clean:
 解决此问题的方法是使用`make`内建函数。
 
 实际上，上面的`Makefile`中的`DEPS`变量就使用了`make`内建函数`patsubst`，它的作用是给`_DEPS`变量的每个元素（空格分开）添加`$(ODIR)/`前缀。`make`内建函数的语法为：
-```make
+```
 $(function arguments)
 ```
 参数之间用逗号隔开，所以`patsubst`函数的声明就是：
-```make
+```
 $(patsubst pattern,replacement,text)
 ```
 表示在`text`根据`pattern`并用`replacement`替换之。
@@ -380,6 +395,7 @@ $(ODIR)/%.o: %.c
 $(PROGRAM): $(patsubst %, $(ODIR)/%,$(addsuffix .o,$(PROGRAM))) $(DEPS)
 	$(CC) -o $@ $(ODIR)/$@.o $(DEPS) 
 
+.PHONY: clean
 clean: 
 	rm $(ODIR)/*.o $(PROGRAM)
 ```
