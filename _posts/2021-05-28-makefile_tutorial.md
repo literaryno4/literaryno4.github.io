@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "GNU make/Makefile 简明教程"
+title:  "GNU make/Makefile 简明实用教程"
 categories: jekyll update
 ---
 
