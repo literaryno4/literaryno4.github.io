@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "【C++】元编程初探·"
+title:  "【C++】元编程初探"
 categories: jekyll update
 ---
 
