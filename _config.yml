@@ -33,11 +33,11 @@ title: 文学第四
 
 # Build settings
 # theme: minima
-# plugins:
-#   - jekyll-feed
+plugins:
+  - jekyll-feed
 
 # Global permalink
-# permalink: /:title:output_ext/
+permalink: /:title:output_ext/
 
 markdown: kramdown
 # Exclude from processing.
