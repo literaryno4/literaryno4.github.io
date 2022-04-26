@@ -37,7 +37,7 @@ title: 文学第四
 #   - jekyll-feed
 
 # Global permalink
-permalink: /:title:output_ext/
+# permalink: /:title:output_ext/
 
 markdown: kramdown
 # Exclude from processing.
