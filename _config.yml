@@ -32,9 +32,9 @@ title: 文学第四
 #github_username:  literaryno4
 
 # Build settings
-theme: minima
-plugins:
-  - jekyll-feed
+# theme: minima
+# plugins:
+#   - jekyll-feed
 
 # Global permalink
 permalink: /:title:output_ext/
