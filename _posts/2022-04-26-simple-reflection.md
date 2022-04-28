@@ -10,6 +10,8 @@ categories: jekyll update
   - [元编程](#元编程)
   - [实现](#实现)
 - [用法](#用法)
+- [总结](#总结)
+- [参考文献](#参考文献)
 
 ### 引言
 
@@ -169,4 +171,125 @@ struct reflector {
 
 ### 用法
 
+假设有这样一个类型需要进行反射：
+```cpp
+struct Signal {
+    bool a;
+    bool b;
+    bool c;
+    int ai;
+    int bi;
+    int ci;
+};
+```
+我们需要做的只是将其定义改为：
+```
+struct Signal {
+    REFLECTABLE(
+    (bool) a,
+    (bool) b,
+    (bool) c,
+    (int) ai,
+    (int) bi,
+    (int) ci
+    )
+};
+```
+`REFLECTABLE`展开之后为每个数据成员的声明以及反射需要的代码。这里以`Signal`中`bool a`为例，其展开之后为（我进行了手动换行）：
+```cpp
+bool a;
+template<class Self>
+struct field_data<0, Self> {
+    Self & self;
+    field_data(Self & self) : self(self) {}
+    typename make_const<Self, bool>::type & get() {
+        return self.a;
+    }
+    typename std::add_const<bool>::type & get() const {
+        return self.a;
+    }
+    const char * name() const {
+        return "a";
+    }
+};
+```
+可以看到，除了生成`bool a;`声明外，还定义了一个`field_data`模板类型，`reflector`就是使用它来进行反射的。
 
+接下来看如何使用`reflector`，首先创建一个`visitor`类用于生成函数对象以获取`field_data`：
+```cpp
+struct field_visitor {
+    template <class C, class Visitor, class I>
+    void operator()(C& c, Visitor v, I) {
+        v(reflector::get_field_data<I::value>(c));
+    }
+};
+```
+迭代访问要反射的每个数据：
+```cpp
+template <class C, class Visitor>
+void visit_each(C &c, Visitor v) {
+    typedef boost::mpl::range_c<int, 0, reflector::fields<C>::n> range;
+    boost::mpl::for_each<range>(
+        boost::bind<void>(field_visitor(), boost::ref(c), v, _1));
+}
+```
+
+自定义一个谓词指定反射后的行为，这里还是以序列化为例：
+```cpp
+// nlohmann::json glob_nl;
+
+// C++11
+// struct do_serialize {
+//      template<class FieldData>
+//      void operator()(FieldData f) {
+//          const char * dataName = f.name();
+//          glob_nl[f.name()] = f.get();
+//     }
+// };
+
+// C++14
+auto do_serialize = [](auto f) {
+        glob_nl[f.name()] = f.get();
+    };
+
+template <class T>
+void auto_serialize_fields(T& x) {
+    visit_each(x, do_serialize);
+}
+```
+测试代码如下：
+```cpp
+
+int main() {
+    Signal s;
+    s.a = false;
+    s.b = true;
+    s.ai = 3232;
+    s.bi = 9012;
+
+    auto_serialize_fields(s);
+
+    std::cout << glob_nl.dump();
+
+    return 0;
+}
+```
+运行结果：
+```
+{"a":false,"ai":3232,"b":true,"bi":9012,"c":true,"ci":0}
+```
+
+### 总结
+
+可以看到，利用反射能够获取数据的类型信息，知道类型信息可以避免大量的重复代码，让自己的代码更具灵活性，降低代码成本。这在现实场景如游戏开发应该是有用武之地的（想象一个角色有大量不同属性需要进行处理）。
+
+事实上，本文实现的反射只能获取到类型信息（静态反射），而不能修改类型信息（动态反射）。要实现动态反射，可能会用到更多的元编程知识（或者叫trick），我目前还未搞懂，当然也有人认为C++是做不到的。
+
+### 参考文献
+
+- [How can I add reflection to a C++ application?](https://stackoverflow.com/questions/41453/how-can-i-add-reflection-to-a-c-application)
+
+- [The Boost Library
+Preprocessor Subset for C/C++](https://www.boost.org/doc/libs/1_78_0/libs/preprocessor/doc/index.html)
+
+- [The C Preprocessor](https://gcc.gnu.org/onlinedocs/cpp/Macros.html#Macros)
