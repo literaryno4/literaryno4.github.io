@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "【C++】chaonet: 一个轻量网络编程库"
+title:  "一个轻量网络编程库"
 categories: jekyll update
 ---
 
