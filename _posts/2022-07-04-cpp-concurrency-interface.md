@@ -1,7 +1,4 @@
 ---
-layout: post
-title:  "【C++并发编程】并发编程接口：thread、promise、packaged_task 和 async"
-categories: jekyll update
 ---
 
 <!-- vim-markdown-toc GFM -->
