@@ -283,7 +283,7 @@ int main() {
 
 可以看到，利用反射能够获取数据的类型信息，知道类型信息可以避免大量的重复代码，让自己的代码更具灵活性，降低代码成本。这在现实场景如游戏开发应该是有用武之地的（想象一个角色有大量不同属性需要进行处理）。
 
-事实上，本文实现的反射只能获取到类型信息（静态反射），而不能修改类型信息（动态反射）。要实现动态反射，可能会用到更多的元编程知识（或者叫trick），我目前还未搞懂，当然也有人认为C++是做不到的。
+事实上，本文实现的反射只能获取到类型信息（静态反射），而不能修改类型信息（动态反射）。要[实现动态反射](http://www.lucadavidian.com/2021/06/21/simple-runtime-reflection-in-c/?unapproved=1286&moderation-hash=f5efc3a53ded6de4f5a66aed7949d9ca#comment-1286)，可能会用到更多的元编程知识（或者叫trick），我目前还未搞懂，当然也有人认为C++是做不到的。
 
 ### 参考文献
 
@@ -293,3 +293,5 @@ int main() {
 Preprocessor Subset for C/C++](https://www.boost.org/doc/libs/1_78_0/libs/preprocessor/doc/index.html)
 
 - [The C Preprocessor](https://gcc.gnu.org/onlinedocs/cpp/Macros.html#Macros)
+
+- [Simple runtime reflection in C++](http://www.lucadavidian.com/2021/06/21/simple-runtime-reflection-in-c/?unapproved=1286&moderation-hash=f5efc3a53ded6de4f5a66aed7949d9ca#comment-1286)
