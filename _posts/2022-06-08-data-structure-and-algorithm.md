@@ -3,14 +3,6 @@ layout: post
 title:  "好玩的数据结构和算法"
 categories: jekyll update
 ---
-
-<!-- vim-markdown-toc GFM -->
-
-* [快速乘法](#快速乘法)
-* [树状数组（Binary Indexed Tree）](#树状数组binary-indexed-tree)
-
-<!-- vim-markdown-toc -->
-
 ### 快速乘法
 
 计算机喜欢做加法而不喜欢乘法，所以可以想办法把乘法转化为加法来提升计算效率。快速乘法本质上就是利用二进制表示和乘法结合率。例如：

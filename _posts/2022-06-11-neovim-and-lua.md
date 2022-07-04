@@ -3,18 +3,6 @@ layout: post
 title:  "Neovim and Lua"
 categories: jekyll update
 ---
-
-<!-- vim-markdown-toc GFM -->
-
-* [Vim + YouCompleteMe](#vim--youcompleteme)
-* [Neovim](#neovim)
-* [Lua：强大、高效、轻量、可嵌入脚本语言](#lua强大高效轻量可嵌入脚本语言)
-    * [简单的语法](#简单的语法)
-    * [C API](#c-api)
-* [参考文献](#参考文献)
-
-<!-- vim-markdown-toc -->
-
 ### Vim + YouCompleteMe
 这两天一直在搞vim编辑器，起因其实只是我听别人又提起了YouCompleteMe(YCM)，那个曾经的噩梦（主要还是网络问题，国内实在是不方便，有些依赖下不下来）。但是它还是勾起了我的好奇心，而且我的低配处理器17年MacBook Pro夏天跑CLion确实有些吃力了。忍不住想尝试一下，不试不知道，还是以前的网络问题，我又花了一天时间才配好，真浪费时间，之间等待下载、编译、安装的时间又无法安下心。实在是得不偿失。好在现在可以愉快地使用了。末尾我放一个现在的vim配置文件。
 
