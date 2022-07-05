@@ -30,12 +30,12 @@ title: 文学第四
 #url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: literaryno4
 #github_username:  literaryno4
-
+#
 # Build settings
 # theme: minima
-# plugins:
-#   - jekyll-feed
-# 
+plugins:
+  - jekyll-feed
+
 # Global permalink
 permalink: /:title:output_ext/
 
