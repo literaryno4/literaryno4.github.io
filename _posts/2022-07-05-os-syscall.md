@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "【操作系统】系统调用详解"
+title:  "【操作系统】Linux 系统调用详解"
 categories: jekyll update
 ---
 
