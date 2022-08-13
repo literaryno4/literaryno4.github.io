@@ -114,6 +114,8 @@ a:hover {
 
 
 img {
+    width: 70%; 
+    height: auto; 
     display: block;
     box-shadow: 0 0 10px #555;
     border-radius: 6px;
