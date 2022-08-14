@@ -78,7 +78,9 @@ struct dinode {
 可以看到，inode可以根据12个地址在加上`indirect` 指向的256个地址确定文件包含的所有数据块。即每个地址都能找到一个块编号（blocknumber），按顺序找到所有有效块就能表示唯一的一个文件。
 
 显然，这里一个文件最大可以为$(12+256) \times 1024$bytes。进一步扩大文件，可以再添加`indirect`或者将`indirect`改为 `double indirect`，思想类似于页表。例如，我们把`indirect`修改为`double indirect`，如下图所示：
-![]()
+
+![](../assets/os/big-inode.jpg)
+
 通过两级间接索引，最大文件可以为$(12+256 * 256) \times 1024$bytes。
 
 ### Buffer cache
