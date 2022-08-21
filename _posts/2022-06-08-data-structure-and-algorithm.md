@@ -8,6 +8,7 @@ categories: jekyll update
 
 * [快速乘法](#快速乘法)
 * [树状数组（Binary Indexed Tree）](#树状数组binary-indexed-tree)
+* [线段树](#线段树)
 
 <!-- vim-markdown-toc -->
 
@@ -82,3 +83,84 @@ class BIT {
 }
 ```
 LeetCode上，树状数组可以用来[计算右侧小于当前元素的个数](https://leetcode.cn/problems/count-of-smaller-numbers-after-self/)、[数组中的逆序对](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)。
+
+### 线段树
+
+线段树和树状数组有些类似，但实现稍微复杂点，它被用来解决这样的需求：
+
+- 求一个数组中任意一段区间的元素之和，复杂度$O(log(n))$
+- 随时可能更新数组中的某个元素，复杂度$O(long(n))$
+
+线段树的思路如图所示：
+
+用树的根节点表示n大小数组[0, n - 1]范围的和；然后左子节点表示父节点前半部分[0, (n - 1) / 2]之和，右子节点表示后半部分[(n - 1) / 2 + 1, n -1]之和，以此类推，直到区间内只有一个元素，直接返回该元素结束。
+
+线段树实现的代码如下：
+
+```c++
+class SegmentTree {
+    int size_;
+    vector<int> tree_;
+    void buildTree(vector<int>& arr, int node, int start, int end) {
+        if (start == end) {
+            tree_[node] = arr[start];
+        } else {
+            int mid = start + ((end - start) >> 1);
+            int leftNode = 2 * node + 1;
+            int rightNode = 2 * node + 2;
+            buildTree(arr, leftNode, start, mid);
+            buildTree(arr, rightNode, mid + 1, end);
+            tree_[node] = tree_[leftNode] + tree_[rightNode];
+        }
+    }
+
+    int query(int node, int start, int end, int qstart, int qend) {
+        if (qstart > end || qend < start) {
+            return 0;
+        }
+        if (start >= qstart && end <= qend) {
+            return tree_[node];
+        }
+        int mid = start + ((end - start) >> 1);
+        int leftNode = 2 * node + 1;
+        int rightNode = 2 * node + 2;
+        return query(leftNode, start, mid, qstart, qend) +
+               query(rightNode, mid + 1, end, qstart, qend);
+    }
+
+    void update(int node, int start, int end, int idx, int val) {
+        if (start == end) {
+            tree_[node] = val;
+        } else {
+            int mid = start + ((end - start) >> 1);
+            int leftNode = 2 * node + 1;
+            int rightNode = 2 * node + 2;
+            if (idx >= start && idx <= mid) {
+                update(leftNode, start, mid, idx, val);
+            } else {
+                update(rightNode, mid + 1, end, idx, val);
+            }
+            tree_[node] = tree_[leftNode] + tree_[rightNode];
+        }
+    }
+
+public:
+    void debugPrint() {
+        for (auto& node : tree_) {
+            cout << node << ' ';
+        }
+        cout << '\n';
+    }
+    SegmentTree(vector<int>& v) : size_(v.size()), tree_(size_ * 4) {
+        buildTree(v, 0, 0, size_ - 1);
+    }
+    void update(int idx, int val) {
+        update(0, 0, size_ - 1, idx, val);
+    }
+    
+    int query(int qstart, int qend) {
+        return query(0, 0, size_ - 1, qstart, qend);
+    }
+};
+```
+
