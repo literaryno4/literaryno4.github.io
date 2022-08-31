@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "【操作系统】文件系统（risc-v为例）"
+title:  "【操作系统】自旋锁、读写锁和RCU"
 categories: jekyll update
 ---
 
@@ -135,7 +135,7 @@ write_acqure(struct rwlock* l) {
 
 - 多个处理器共用一个内存控制器。这样可以对一个特定地址加锁，然后让处理器执行2-3个指令，然后解锁；
 
-- 如果处理器有缓存，那么缓存一致性协议会确保对于持有了想要更新的数据的cache line只有一个写入者，相应的处理器会对cache line 加锁，完成操作。
+- 如果处理器有缓存，那么缓存一致性协议会确保对于持有了想要更新的数据的cache line只有一个写入者，相应的处理器会对cache line 加锁，完成操作。具体可以看[陈皓的文章](https://coolshell.cn/articles/20793.html)。
 
 ### RCU（Read Copy Update）
 
