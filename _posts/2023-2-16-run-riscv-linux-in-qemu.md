@@ -6,16 +6,18 @@ categories: jekyll update
 
 <!-- vim-markdown-toc GFM -->
 
-* [prerequistment](#prerequistment)
+* [prerequisites](#prerequisites)
 * [root file system](#root-file-system)
 * [Compile linux kernel](#compile-linux-kernel)
 * [run in qemu](#run-in-qemu)
 * [other details](#other-details)
+    * [initrd](#initrd)
+    * [hello kernel](#hello-kernel)
 * [reference](#reference)
 
 <!-- vim-markdown-toc -->
 
-### prerequistment
+### prerequisites
 
 - [qemu-system-riscv64](https://github.com/qemu/qemu
 ).
@@ -32,7 +34,7 @@ categories: jekyll update
 To run a minimal riscv linux, we need a rootfs firstly. Here I polulate rootfs with busybox, a tiny version of many Unix utilities, and some other must included directories and files.
 
 Turn on static link option and compile:
-```
+```shell
 cd busybox
 make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- defconfig
 
@@ -49,7 +51,7 @@ make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- install
 Now we have many riscv64 binaries in `_install` which will run on riscv linux and be as part of the root file system.
 
 It look like this:
-```
+```shell
 tree . -d 1
 > .
 > ├── bin
@@ -60,7 +62,7 @@ tree . -d 1
 ```
 
 next, create another directories:
-```
+```shell
 mkdir dev proc etc lib tmp
 ```
 
@@ -69,7 +71,7 @@ All these minimum set of directories is suggested by [linux docs](https://tldp.o
 Note that the `lib` is not necessary because we statically compile the busybox. And `tmp` is also not necessary.
 
 We leave the directories we create empty except for `dev` in which we must create devices to be used by binaries:
-```
+```shell
 # create new devices with `mknod`
 cd dev
 sudo mknod console c 5 1 
@@ -82,7 +84,7 @@ sudo cp -R /dev/console dev
 and don't foget a init program to tell kernel where to begin with.
 
 save these script as init:
-```
+```shell
 #!/bin/sh
 
 mount -t proc none /proc
@@ -90,7 +92,7 @@ mount -t proc none /proc
 echo -e "\nBoot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
 ```
 make it be execuable:
-```
+```shell
 chmod +x init
 ```
 
@@ -103,7 +105,7 @@ After linux 2.6, the linux kernel always create a gzipped cpio format initramfs 
 
 To use generate the customized initramfs from root file system we create above, we firstly should do some config:
 
-```
+```shell
 cd linux
 make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- defconfig
 
@@ -125,7 +127,7 @@ Now we have the linux Image to boot in `linux/arch/riscv/boot/`.
 ### run in qemu
 
 Now we can run the compiled riscv linux in qemu:
-```
+```shell
 qemu-system-riscv64 \
 -machine virt \
 -nographic \
@@ -160,8 +162,10 @@ dev      init     lib64    mnt      root     sys
 
 ### other details
 
+#### initrd
+
 In fact, you can leave default config and compile linux kernel and specify initramfs using qemu option like this:
-```
+```shell
 qemu-system-riscv64 \
 -machine virt \
 -nographic \
@@ -170,12 +174,34 @@ qemu-system-riscv64 \
 ```
 
 Here the `initramfs.cpio` can be created from the root file system above like this:
-```
+```shell
 cd ../busybox/_install
 find . | cpio -H newc -o > ../../initramfs.cpio
 ```
 
 with `initrd`, the initramfs defaultly linded in kernel Image will be override.
+
+#### hello kernel
+
+We can make kernel run any program other than `/bin/sh`.
+```shell
+cat > hello.c << EOF
+#include <stdio.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[])
+{
+  printf("Hello world!\n");
+  sleep(999999999);
+}
+EOF
+riscv64-linux-gnu-gcc -static hello.c -o init
+echo init | cpio -o -H newc | gzip > test.cpio.gz 
+# Testing external initramfs using the initrd loading mechanism.
+qemu -kernel /boot/vmlinuz -initrd test.cpio.gz /dev/zero
+```
+
+Here the kernel find the hello binary named init and execute it to print `Hello World!`. This small root file system with only one init binary is truely a minimal riscv linux!.
 
 ### reference
 
