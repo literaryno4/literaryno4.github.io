@@ -4,6 +4,7 @@ title:  "Run A Mininal Riscv Linux in Qemu"
 categories: jekyll update
 ---
 
+Table of content:
 <!-- vim-markdown-toc GFM -->
 
 * [prerequisites](#prerequisites)
