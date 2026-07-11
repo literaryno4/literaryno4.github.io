@@ -2,6 +2,8 @@ backend:
   name: github
   repo: literaryno4/literaryno4.github.io
   branch: master
+  app_id: Ov23lidpBD3GfJH5UcbV
+  auth_type: pkce
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
