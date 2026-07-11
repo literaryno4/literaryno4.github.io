@@ -2,8 +2,6 @@ backend:
   name: github
   repo: literaryno4/literaryno4.github.io
   branch: master
-  base_url: https://decap-oauth.netlify.app
-  auth_endpoint: /api/auth
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
