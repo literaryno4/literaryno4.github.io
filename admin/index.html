@@ -5,8 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title>内容管理 - 文学第四</title>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #nc-root { min-height: 100vh; }
+    .loading-msg {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; font-family: -apple-system, sans-serif;
+      color: #59636e; font-size: 1.1rem;
+    }
+  </style>
 </head>
 <body>
+  <div id="nc-root">
+    <div class="loading-msg">正在加载编辑器...</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
