@@ -5,6 +5,7 @@ content:
     label: 博客文章
     type: collection
     path: _posts
+    extension: md
     filename: "{year}-{month}-{day}-{fields.title}"
     fields:
       - name: layout
