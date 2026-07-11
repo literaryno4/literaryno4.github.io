@@ -1,0 +1,51 @@
+media: assets/img
+
+content:
+  - name: posts
+    label: 博客文章
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{fields.title}"
+    fields:
+      - name: layout
+        type: string
+        hidden: true
+        default: post
+      - name: title
+        label: 标题
+        type: string
+      - name: date
+        label: 发布日期
+        type: date
+      - name: categories
+        label: 分类
+        type: string
+        default: jekyll update
+      - name: tags
+        label: 标签
+        type: string
+        list: true
+      - name: body
+        label: 正文
+        type: rich-text
+
+  - name: about
+    label: 关于页面
+    type: file
+    path: about.markdown
+    fields:
+      - name: layout
+        type: string
+        hidden: true
+        default: page
+      - name: title
+        type: string
+        hidden: true
+        default: About
+      - name: permalink
+        type: string
+        hidden: true
+        default: /about/
+      - name: body
+        label: 正文
+        type: rich-text
