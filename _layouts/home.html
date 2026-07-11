@@ -1,16 +1,6 @@
 ---
 layout: default
 ---
-<header class="site-header" role="banner">
-<div id="expand-box">
- <div id="expand-box-header" class="clearfix">
-  <span style="float: left;"><a class="site-title" rel="author" href="/">文学第四</a></span> 
-  <span style="float: right;"><a align="right" href="/about/">About</a></span>
- </div>
-</div>
-</header>
-<br>
-
 <div class="home">
   {%- if page.title -%}
     <h1 class="page-heading">{{ page.title }}</h1>
@@ -22,20 +12,27 @@ layout: default
     <ul class="post-list">
       {%- for post in site.posts -%}
       <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        {%- assign date_format = site.minima.date_format | default: "%Y-%m-%d" -%}
+        <span class="post-meta">
+          {{ post.date | date: date_format }}
+          {%- assign words = post.content | number_of_words -%}
+          {%- assign read_time = words | divided_by: 200 | plus: 1 -%}
+          <span class="reading-time">{{ read_time }} min</span>
+        </span>
         <h3>
           <a class="post-link" href="{{ post.url | relative_url }}">
             {{ post.title | escape }}
           </a>
         </h3>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
+        {%- if post.tags.size > 0 -%}
+          <div class="post-tags">
+            {%- for tag in post.tags -%}
+              <span class="tag">{{ tag }}</span>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
       </li>
       {%- endfor -%}
     </ul>
-
   {%- endif -%}
-
 </div>

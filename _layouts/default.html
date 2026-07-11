@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
+<html lang="{{ page.lang | default: site.lang | default: 'zh-cmn-Hans' }}">
   {%- include head.html -%}
-<script type="text/javascript" async 
-src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?
-config=TeX-AMS-MML_HTMLorMML"></script>
   <body>
-
-    <!-- {%- include header.html -%} -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+        <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.site-nav').classList.toggle('open')">☰</button>
+        <nav class="site-nav">
+          <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>首页</a>
+          {%- for item in site.data.navigation.main -%}
+            <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}class="active"{% endif %}>{{ item.title }}</a>
+          {%- endfor -%}
+          <a href="{{ '/admin/' | relative_url }}">写作</a>
+        </nav>
+      </div>
+    </header>
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
@@ -15,7 +22,40 @@ config=TeX-AMS-MML_HTMLorMML"></script>
       </div>
     </main>
 
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="footer-text">© {{ site.time | date: '%Y' }} {{ site.title }}</span>
+        <div class="footer-links">
+          <a href="{{ '/about/' | relative_url }}">关于</a>
+          <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+          <a href="https://github.com/literaryno4" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+    <script>
+      // Back to top button visibility
+      const btn = document.querySelector('.back-to-top');
+      if (btn) {
+        window.addEventListener('scroll', function() {
+          btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+      }
+    </script>
+
+    <!-- MathJax 3 (modern, loads async) -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        svg: { fontCache: 'global' },
+        startup: { typeset: true }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   </body>
 </html>
-<!-- Mathjax Support -->
-
