@@ -5,8 +5,8 @@ content:
     label: 博客文章
     type: collection
     path: _posts
-    extension: md
-    filename: "{year}-{month}-{day}-{fields.title}"
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{fields.title}.md"
     fields:
       - name: layout
         type: string
