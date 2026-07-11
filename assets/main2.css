@@ -144,7 +144,9 @@ body {
 
 .site-title:hover {
   opacity: 0.8;
-  background-color: transparent;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .site-nav {
